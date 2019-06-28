@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+  <!-- material-ui -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" />
+  
+  <meta charset="UTF-8">
+  <title>
+    {% block title %}
+      TimeToShop
+    {% endblock title %}
+  </title>
+</head>
+<body>
+  {% block content %}
+    123
+  {% endblock content %}
+  <script src={% static "build/index.js" %}></script>
+</body>
+</html>

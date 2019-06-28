@@ -1,0 +1,49 @@
+{
+  "name": "timetoshop",
+  "version": "1.0.0",
+  "description": "Test project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celianon/TimeToShop.git"
+  },
+  "author": "Cellon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/celianon/TimeToShop/issues"
+  },
+  "homepage": "https://github.com/celianon/TimeToShop#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.1.3",
+    "js-cookie": "^2.2.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-infinite-scroller": "^1.2.4",
+    "react-onclickoutside": "^6.8.0",
+    "react-redux": "^7.1.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-scroll": "^1.7.12",
+    "react-star-ratings": "^2.3.0",
+    "redux": "^4.0.1",
+    "redux-devtools": "^3.5.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^3.0.0",
+    "file-loader": "^4.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4"
+  }
+}
