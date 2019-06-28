@@ -15,5 +15,6 @@ urlpatterns = [
   path('', CategoryList.as_view()),
   path('category/<str:title>/', CategoryList.as_view()),
   path('categories/', CategoryList.as_view()),
-  path('item/<str:slug>/', CategoryList.as_view())
+  path('item/<str:slug>/', CategoryList.as_view()),
+  path('about/', CategoryList.as_view())
 ]
