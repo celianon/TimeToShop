@@ -1,5 +1,8 @@
 venv/
 
+static/admin/
+static/rest_framework/
+
 # VsCode
 .vscode/
 
