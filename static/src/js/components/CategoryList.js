@@ -1,14 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import static_path from '../static.js'
-let search = static_path + require('../../img/search.png')
-
 import { fetch_list_category } from '../actions/shopActions'
 
 import CategoryCard from './CategoryCard'
-import Search from './Search' 
-import Filters from './Filters' 
 
 export class App extends React.Component{
   componentDidMount(){
@@ -16,15 +11,11 @@ export class App extends React.Component{
   }
 
   render() {
-    const { categories, fetching, fetched, errors } = this.props
+    const { categories, fetched, errors } = this.props
     return (
       <section className="section-category">
-      <div className="search">
-        <Search category_name=''/>
-      </div>
         <div className="categories-wrap">
-          { errors ? <strong>Something went wrong D:</strong> :
-           fetched ? categories.map(cat => <CategoryCard key={cat.title} category={cat}/>) :
+          {fetched ? categories.map(cat => <CategoryCard key={cat.title} category={cat}/>) :
            <p>Loading...</p> 
           }
         </div>

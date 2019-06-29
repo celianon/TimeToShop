@@ -1,53 +1,63 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { search_items, reload_sug } from '../actions/shopActions'
+import { search_items, reload_serch_value } from '../actions/shopActions'
 
 import static_path from '../static'
 let search = static_path + require('../../img/search.png')
 
-import onClickOutside from 'react-onclickoutside'
+// import onClickOutside from 'react-onclickoutside'
+
+import { TextField, Input } from '@material-ui/core'
 
 export class Search extends React.Component{
   search_items = e => {
+    const { category_name, query, types, min, max } = this.props
     e.preventDefault()
-    let query = this.refs.search.value
-    this.props.search_items(this.props.category_name, 
-                                        query, 
-                                        this.props.types,
-                                        this.props.min, 
-                                        this.props.max )
+    this.props.search_items(category_name, query, types, min, max)
   }
 
-  suggestions = e => {
+  reload_search_value = e => {
     const value = e.target.value
-    const regexp = new RegExp(`${value}`, 'i')
-    let suggestions =  this.props.list_suggestions.sort().filter(sg => regexp.test(sg))
-    this.props.reload_sug(suggestions)
+    // const regexp = new RegExp(`${value}`, 'i')
+    // let suggestions =  this.props.list_suggestions.sort().filter(sg => regexp.test(sg))
+    this.props.reload_serch_value(value)
   }
 
-  suggestions_click = e => {
-    const text = e.target.textContent
-    this.refs.search.value = text
-    this.props.reload_sug(null)
+  reset = () => {
+    this.refs.search_form.reset()
   }
+  // suggestions_click = e => {
+  //   const text = e.target.textContent
+  //   this.refs.search.value = text
+  //   this.props.reload_sug(null)
+  // }
 
-  handleClickOutside = () => {
-    this.props.suggestions == null? 
-    null : this.props.reload_sug(null)
-  }
+  // handleClickOutside = () => {
+  //   this.props.suggestions == null? 
+  //   null : this.props.reload_sug(null)
+  // }
 
   render() {
-    const { suggestions } = this.props
+    const { query, reset } = this.props
+    reset ? this.reset() : null
     return (
         <form ref="search_form" className="main-form" action="" onSubmit={this.search_items}>
           <div className="search-cont">
-            <input onChange={this.suggestions} className="main-input" type="text" ref='search' />
+            <TextField 
+              id="standard-full-width"
+              label="Search"
+              fullWidth
+              margin="normal"
+              onChange={this.reload_search_value}
+              value={query}
+            />
+            {/* <input onChange={this.suggestions} className="main-input" type="text" ref='search' /> */}
             <button className="submit-button" type="submit"><img className="search-button" src={search} alt="search"/></button>
-            <div className="suggests">
+            {/* <div className="suggests">
               <ul className="sug-ul">
                 {suggestions && suggestions.map(sg => <li onClick={this.suggestions_click} className="sug-li" key={sg}>{sg}</li>)}
               </ul>
-             </div> 
+             </div>  */}
           </div>
         </form>
     )
@@ -55,6 +65,7 @@ export class Search extends React.Component{
 }
 
 const mapStateToProps = state => ({
+  reset: state.shop.reset,
   query: state.shop.query,
   min: state.shop.min,
   max: state.shop.max,
@@ -63,4 +74,4 @@ const mapStateToProps = state => ({
   suggestions: state.shop.suggestions
 })
 
-export default connect(mapStateToProps, { search_items, reload_sug })(onClickOutside(Search))
+export default connect(mapStateToProps, { search_items, reload_serch_value })(Search)

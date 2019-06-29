@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import static_path from '../static'
 let d = static_path + require('../../img/D.jpg')
 
-import { fetch_items_in_category, load_up_search, reload_sug } from '../actions/shopActions'
+import { fetch_items_in_category, load_up_search } from '../actions/shopActions'
 
 import ItemsCard from './ItemsCard'
 import Search from './Search' 
@@ -19,8 +19,7 @@ export class CategoryPage extends React.Component{
 
   loadNext = () => {
     const title = this.props.match.params.title
-    const {next, searched, load_up_search, fetch_items_in_category} = this.props
-    console.log(next)
+    const { next, searched, load_up_search, fetch_items_in_category } = this.props
     searched ? 
       next != null ? load_up_search(next) : null
         :
@@ -77,4 +76,4 @@ const mapStateToProps = state => ({
   errors: state.shop.errors
 })
 
-export default connect(mapStateToProps, { fetch_items_in_category, load_up_search, reload_sug })(CategoryPage)
+export default connect(mapStateToProps, { fetch_items_in_category, load_up_search })(CategoryPage)

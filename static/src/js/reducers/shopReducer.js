@@ -8,6 +8,8 @@ const initialState  = {
   qs_items: [],
   item: {},
   category: {item: []},
+  // is mount on 'home' page
+  home_is_mount: false,
   // paginations on 'home' page
   next: null,
   // paginations on 'search in category' page
@@ -20,6 +22,8 @@ const initialState  = {
   types: {},
   min: '',
   max: '',
+  // need reset ?
+  reset: false,
   // search suggestion
   list_suggestions: [],
   suggestions: [],
@@ -143,7 +147,8 @@ export default function(state = initialState, actions){
         category: {
           ...state.category,
           item: actions.payload.results,
-        }
+        },
+        reset: false
       }
     // load up items on 'search in category' page,
     case 'LOAD_UP_SEARCH':
@@ -165,13 +170,35 @@ export default function(state = initialState, actions){
         searching: false,
         searched: true,
         qs_items: actions.payload.results,
-        next: actions.payload.next
+        next: actions.payload.next,
+        reset: false
       }
     // reload search suggestions
     case 'RELOAD_SUG':
       return {
         ...state,
         suggestions: actions.payload
+      }
+    case 'RESET_FORMS':
+      return {
+        ...state,
+        query: '',
+        types: {},
+        min: '',
+        max: '',
+        reset: true
+      }
+    // update search input to state
+    case 'RELOAD_SEARCH_VALUE':
+      return {
+        ...state,
+        query: actions.payload
+      }
+    // check is mount on 'home' page
+    case 'HOME_TOGGLE_ISMOUNT':
+      return {
+        ...state,
+        home_is_mount: actions.payload
       }
     // handle show dilog review form on 'item' page
     case 'HANDLE_DIALOG':

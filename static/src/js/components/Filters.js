@@ -1,14 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { search_items, reload_sug } from '../actions/shopActions'
+import { search_items, reload_sug, reset_forms } from '../actions/shopActions'
 
 export class Filters extends React.Component{
 
-  reset = e => {
+  reset_forms = e => {
     e.preventDefault()
+    this.props.reset_forms()
+    this.props.search_items(this.props.category_name)
+  }
+
+  reset = () => {
     this.refs.sidebar_form.reset()
-    this.props.search_items(this.props.category_name, '', {bool: false}, '', '')
   }
 
   filter_change = e => {
@@ -37,7 +41,9 @@ export class Filters extends React.Component{
   }
 
   render() {
-    const { errors, fetched, category } = this.props
+    const { errors, fetched, category, reset } = this.props
+
+    reset ? this.reset() : null
     return (
       <form ref="sidebar_form" action="">
         {fetched ?
@@ -61,7 +67,7 @@ export class Filters extends React.Component{
         </div>
         <div className="column">
           <button onClick={this.apply} className="btn" type="submit">Apply</button>
-          <button onClick={this.reset} className="btn">Reset</button>
+          <button onClick={this.reset_forms} className="btn">Reset</button>
         </div>
       </form>
     )
@@ -69,6 +75,7 @@ export class Filters extends React.Component{
 }
 
 const mapStateToProps = state => ({
+  reset: state.shop.reset,
   query: state.shop.query,
   min: state.shop.min,
   max: state.shop.max,
@@ -78,4 +85,4 @@ const mapStateToProps = state => ({
   errors: state.shop.errors
 })
 
-export default connect(mapStateToProps, { search_items, reload_sug })(Filters)
+export default connect(mapStateToProps, { search_items, reload_sug, reset_forms })(Filters)
