@@ -41,12 +41,12 @@ export class Filters extends React.Component{
   }
 
   render() {
-    const { errors, fetched, category, reset } = this.props
+    const { errors, category_page_fetched, category, reset, max, min } = this.props
 
     reset ? this.reset() : null
     return (
       <form ref="sidebar_form" action="">
-        {fetched ?
+        {category_page_fetched ?
             category.filters.split(',').map(filter =>
               <div className="filters" key={filter}>
                 <div className="filter">
@@ -59,10 +59,10 @@ export class Filters extends React.Component{
         }
         <div className="filter-prise">
           <p className="prise-label row">
-            From: <input ref="from" className="prise-input" type="number" />$
+            From: <input ref="from" className="prise-input" type="number" defaultValue={min} />$
           </p>
           <p className="prise-label row">
-            To: <input ref="to" className="prise-input" type="number" />$
+            To: <input ref="to" className="prise-input" type="number" defaultValue={max}/>$
           </p>
         </div>
         <div className="column">
@@ -81,7 +81,7 @@ const mapStateToProps = state => ({
   max: state.shop.max,
   types: state.shop.types,
   category: state.shop.category,
-  fetched: state.shop.fetched,
+  category_page_fetched: state.shop.category_page_fetched,
   errors: state.shop.errors
 })
 

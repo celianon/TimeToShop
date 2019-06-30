@@ -4,7 +4,7 @@ import { Home } from '@material-ui/icons'
 import { AppBar, Typography, Link, Toolbar, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Link as RouterLink} from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import static_path from '../static.js'
 let logo = static_path + require('../../img/logo.png')
 

@@ -3,6 +3,9 @@ const initialState  = {
   errors: null,
   fetching: false,
   fetched: false,
+  list_category_fetched: false,
+  category_page_fetched: false,
+  item_fetched: false,
   // data
   qs_categories: [],
   qs_items: [],
@@ -46,7 +49,7 @@ export default function(state = initialState, actions){
       return {
         ...state,
       fetching: false,
-      fetched: true,
+      list_category_fetched: true,
       qs_categories: actions.payload
       }
     // any erorrs
@@ -77,7 +80,7 @@ export default function(state = initialState, actions){
       return {
         ...state,
         fetching: false,
-        fetched: true,
+        category_page_fetched: true,
         category: {
           ...state.category,
           ...actions.payload,
@@ -123,7 +126,7 @@ export default function(state = initialState, actions){
       return {
         ...state,
       fetching: false,
-      fetched: true,
+      item_fetched: true,
       open: false,
       item: actions.payload
       }
@@ -210,6 +213,7 @@ export default function(state = initialState, actions){
     case 'ADD_REVIEW':
       return {
         ...state,
+        open: false,
         item: {
           ...state.item,
           reviews: [

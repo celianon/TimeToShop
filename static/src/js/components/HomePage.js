@@ -11,8 +11,6 @@ import ItemsCard from './ItemsCard'
 
 export class HomePage extends React.Component{
   componentDidMount(){
-    console.log('DidMount')
-    console.log(this.props.home_is_mount)
     // check if already mount
     if (!this.props.home_is_mount) {
       this.props.fetch_items_without_category()
@@ -20,13 +18,7 @@ export class HomePage extends React.Component{
       this.props.home_toggle_isMount(this.props.home_is_mount)
     }
   }
-
-  componentWillUnmount(){
-    console.log('willUnmount')
-    console.log(this.props.home_is_mount)
-    // this.props.reset_forms()
-  }
-
+  
   loadNext = () => {
     this.props.next ? 
     this.props.fetch_items_without_category(this.props.next) : null

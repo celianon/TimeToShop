@@ -13,8 +13,10 @@ import Filters from './Filters'
 
 export class CategoryPage extends React.Component{
   componentDidMount(){
-    const title = this.props.match.params.title
+    if (!this.props.category_page_fetched){
+       const title = this.props.match.params.title
     this.props.fetch_items_in_category(title)
+    }
   }
 
   loadNext = () => {
@@ -27,8 +29,9 @@ export class CategoryPage extends React.Component{
   }
 
   render() {
-    const { fetched, category } = this.props
+    const { category_page_fetched, category } = this.props
     const category_name = this.props.match.params.title
+    
     return (
       <InfiniteScroll
         pageStart={0}
@@ -42,7 +45,7 @@ export class CategoryPage extends React.Component{
               <div className="search">
                 <Search category_name={category_name}/>
               </div>
-                {fetched ? 
+                {category_page_fetched ? 
                     category.item.length == 0 ? <div className="not-item"><h2>Not Items</h2><img src={d} /></div> :
                       category.item.map(item => <ItemsCard key={item.id} item={item}/>) 
                   : <p>Loading...</p>
@@ -71,7 +74,7 @@ const mapStateToProps = state => ({
 
   category: state.shop.category,
   fetching: state.shop.fetching,
-  fetched: state.shop.fetched,
+  category_page_fetched: state.shop.category_page_fetched,
 
   errors: state.shop.errors
 })
