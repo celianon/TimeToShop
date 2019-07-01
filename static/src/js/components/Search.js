@@ -51,13 +51,9 @@ export class Search extends React.Component{
               onChange={this.reload_search_value}
               value={query}
             />
-            {/* <input onChange={this.suggestions} className="main-input" type="text" ref='search' /> */}
-            <button className="submit-button" type="submit"><img className="search-button" src={search} alt="search"/></button>
-            {/* <div className="suggests">
-              <ul className="sug-ul">
-                {suggestions && suggestions.map(sg => <li onClick={this.suggestions_click} className="sug-li" key={sg}>{sg}</li>)}
-              </ul>
-             </div>  */}
+            <button className="submit-button" type="submit">
+              <img className="search-button" src={search} alt="search"/>
+            </button>
           </div>
         </form>
     )
