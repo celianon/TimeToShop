@@ -1,42 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import static_path from '../static.js'
-let search = static_path + require('../../img/search.png')
-
+import { Grid } from '@material-ui/core'
 import { fetch_list_category } from '../actions/shopActions'
 
 import CategoryCard from './CategoryCard'
-import Search from './Search' 
-import Filters from './Filters' 
 
 export class App extends React.Component{
   componentDidMount(){
-    this.props.fetch_list_category()
+    if (!this.props.list_category_fetched){
+      this.props.fetch_list_category()
+    }
   }
-
   render() {
-    const { categories, fetching, fetched, errors } = this.props
+    const { categories, list_category_fetched, errors } = this.props
     return (
-      <section className="section-category">
-      <div className="search">
-        <Search category_name=''/>
-      </div>
-        <div className="categories-wrap">
-          { errors ? <strong>Something went wrong D:</strong> :
-           fetched ? categories.map(cat => <CategoryCard key={cat.title} category={cat}/>) :
-           <p>Loading...</p> 
-          }
-        </div>
-    </section>
+      <Grid 
+        container
+        direction="row"
+        alignItems="center"
+        justify="center"
+        className="wrap"
+      >
+          {list_category_fetched ? 
+          categories.map(cat => <CategoryCard key={cat.title} category={cat}/>) :
+          <p>Loading...</p>}
+      </Grid>
     )
   }
 }
-
 const mapStateToProps = state => ({
   categories: state.shop.qs_categories,
   fetching: state.shop.fetching,
-  fetched: state.shop.fetched,
+  list_category_fetched: state.shop.list_category_fetched,
   errors: state.shop.errors,
 })
 

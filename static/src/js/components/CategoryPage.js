@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import static_path from '../static'
 let d = static_path + require('../../img/D.jpg')
 
-import { fetch_items_in_category, load_up_search, reload_sug } from '../actions/shopActions'
+import { fetch_items_in_category, load_up_search } from '../actions/shopActions'
 
 import ItemsCard from './ItemsCard'
 import Search from './Search' 
@@ -13,14 +13,15 @@ import Filters from './Filters'
 
 export class CategoryPage extends React.Component{
   componentDidMount(){
-    const title = this.props.match.params.title
+    if (!this.props.category_page_fetched){
+       const title = this.props.match.params.title
     this.props.fetch_items_in_category(title)
+    }
   }
 
   loadNext = () => {
     const title = this.props.match.params.title
-    const {next, searched, load_up_search, fetch_items_in_category} = this.props
-    console.log(next)
+    const { next, searched, load_up_search, fetch_items_in_category } = this.props
     searched ? 
       next != null ? load_up_search(next) : null
         :
@@ -28,22 +29,24 @@ export class CategoryPage extends React.Component{
   }
 
   render() {
-    const { fetched, category } = this.props
+    const { category_page_fetched, category } = this.props
     const category_name = this.props.match.params.title
+    
     return (
       <InfiniteScroll
         pageStart={0}
         loadMore={this.loadNext}
         hasMore={this.props.next != null}
         loader={<div key={1}>Loading...</div>}
+        className="wrap"
       >
-        <section className="items-search">
+        <section className="items-search wrap">
           <div className="content">
             <div className="search-result">
               <div className="search">
                 <Search category_name={category_name}/>
               </div>
-                {fetched ? 
+                {category_page_fetched ? 
                     category.item.length == 0 ? <div className="not-item"><h2>Not Items</h2><img src={d} /></div> :
                       category.item.map(item => <ItemsCard key={item.id} item={item}/>) 
                   : <p>Loading...</p>
@@ -72,9 +75,9 @@ const mapStateToProps = state => ({
 
   category: state.shop.category,
   fetching: state.shop.fetching,
-  fetched: state.shop.fetched,
+  category_page_fetched: state.shop.category_page_fetched,
 
   errors: state.shop.errors
 })
 
-export default connect(mapStateToProps, { fetch_items_in_category, load_up_search, reload_sug })(CategoryPage)
+export default connect(mapStateToProps, { fetch_items_in_category, load_up_search })(CategoryPage)

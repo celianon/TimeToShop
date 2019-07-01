@@ -77,7 +77,6 @@ export const fetch_item = (slug) => dispatch => {
   })
   fetch(`http://127.0.0.1:8000/api/item/${slug}`)
     .then(response => {
-      console.log(response)
       return response.json()
     })
     .then(item => dispatch({
@@ -167,14 +166,34 @@ export const reload_sug = sug => dispatch => {
     payload: sug
   })
 }
+// Main search value to state
+export const reload_serch_value = value => dispatch => {
+  dispatch({
+    type: 'RELOAD_SEARCH_VALUE',
+    payload: value
+  })
+}
+// clear all forms
+export const reset_forms = () => dispatch => {
+  dispatch({
+    type: 'RESET_FORMS'
+  })
+}
 export const handleDialog = () => dispatch => {
   dispatch({
     type: 'HANDLE_DIALOG'
   })
 }
+// check is mount on 'home' page
+export const home_toggle_isMount = value => dispatch => {
+  dispatch({
+    type: 'HOME_TOGGLE_ISMOUNT',
+    payload: !value
+  })
+}
+
 export const add_review = (id, nickname, stars, body) => dispatch => {
   const csrftoken = Cookies.get('csrftoken')
-  console.log(stars)
   fetch('http://127.0.0.1:8000/api/review/', {
     method: 'POST',
     headers: {
