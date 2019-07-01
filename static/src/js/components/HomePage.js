@@ -31,8 +31,9 @@ export class HomePage extends React.Component{
           pageStart={0}
           loadMore={this.loadNext}
           hasMore={this.props.next != null}
-          loader={<div key={1}>Loading...</div>}>
-        <section className="items-search">
+          loader={<div key={1}>Loading...</div>}
+          className="wrap">
+        <section className="items-search wrap">
           <div className="content">
             <div className="search-result">
               <div className="search">

@@ -38,8 +38,9 @@ export class CategoryPage extends React.Component{
         loadMore={this.loadNext}
         hasMore={this.props.next != null}
         loader={<div key={1}>Loading...</div>}
+        className="wrap"
       >
-        <section className="items-search">
+        <section className="items-search wrap">
           <div className="content">
             <div className="search-result">
               <div className="search">

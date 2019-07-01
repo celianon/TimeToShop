@@ -8,12 +8,13 @@ import { Link as RouterLink } from 'react-router-dom'
 const useStyles = makeStyles({
   card: {
     width: '80%',
-    margin: '1rem auto'
+    margin: '1rem auto',
+    flex: 1,
   },
 })
 
 export default function ItemsCard({item}) {
-  const { slug, prise, image_url, title, description, stars } = item
+  const { slug, prise, img, title, description, stars } = item
 
   const classes = useStyles()
 
@@ -36,7 +37,7 @@ export default function ItemsCard({item}) {
             alignItems="center"
           >
             <Link component={RouterLink} to={`/item/${slug}`}>
-              <img className="card-item-image" src={image_url} />
+              <img className="card-item-image" src={img} />
             </Link>
             <Stars stars={stars}/>
           </Grid>

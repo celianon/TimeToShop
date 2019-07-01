@@ -20,6 +20,7 @@ export class App extends React.Component{
         direction="row"
         alignItems="center"
         justify="center"
+        className="wrap"
       >
           {list_category_fetched ? 
           categories.map(cat => <CategoryCard key={cat.title} category={cat}/>) :

@@ -20,7 +20,7 @@ export default function CategoryCard({category}) {
   return (
       <Card className={classes.card}>
         <CardContent>
-          <Link component={RouterLink} to={`/category/${title}/`}>
+          <a href={`/category/${title}/`}>
             <Grid 
               item 
               container
@@ -33,7 +33,7 @@ export default function CategoryCard({category}) {
                 {title}
               </Typography>
             </Grid>
-          </Link>
+          </a>
         </CardContent>
       </Card>
   )
