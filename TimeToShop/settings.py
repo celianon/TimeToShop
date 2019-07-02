@@ -37,6 +37,7 @@ MIDDLEWARE = [
 
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'restapi.pagination.CustomPagination',
