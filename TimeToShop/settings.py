@@ -23,6 +23,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'img')
 MEDIA_URL = '/img/'
 
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
