@@ -1,4 +1,5 @@
 import os
+import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -9,6 +10,12 @@ DEBUG = False
 ALLOWED_HOSTS = ['timetoshop.pythonanywhere.com', 'timetoshop.herokuapp.com']
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Update database configuration with $DATABASE_URL.
+django_heroku.settings(locals())
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/')
@@ -26,3 +33,4 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'test.sqlite3'),
     }
 }
+WHITENOISE_STATIC_PREFIX = '/'
