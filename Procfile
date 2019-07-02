@@ -1,1 +1,1 @@
-web: gunicorn TimeToShop.wsgi --log-file -
+web: gunicorn TimeToShop.wsgi --preload --workers 1
