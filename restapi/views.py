@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.http import Http404
 
 from rest_framework import generics
+from rest_framework import mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -16,13 +17,27 @@ from django_filters import Filter
 from .serializers import CategorySerializer, ItemSerializer, ReviewSerializer
 from .models import Category, Item, Review
 
-# 'Access-Control-Allow-Origin'
-
 # API
-class CategoryCreateList(generics.ListCreateAPIView):
+class CategoryCreateList(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        generics.GenericAPIView):
   queryset = Category.objects.all()
   serializer_class = CategorySerializer
   pagination_class = None
+
+  def get(self, request, *args, **kwargs):
+    queryset = self.filter_queryset(self.get_queryset())
+
+    page = self.paginate_queryset(queryset)
+    if page is not None:
+      serializer = self.get_serializer(page, many=True)
+      return self.get_paginated_response(serializer.data)
+
+    serializer = self.get_serializer(queryset, many=True)
+    return Response(serializer.data, headers={'Access-Control-Allow-Origin' : '*'})
+
+  def post(self, request, *args, **kwargs):
+    return self.create(request, *args, **kwargs)
 
 
 class CategoryDetail(APIView):
