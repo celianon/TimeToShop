@@ -6,7 +6,7 @@ SECRET_KEY = 'k@w1h-n8r*i!67sj)+osn=t0m^b8vqsd5s#kf1f6c2wtt44m(z'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['timetoshop.pythonanywhere.com', 'timetoshop.herokuapp.com']
+ALLOWED_HOSTS = ['timetoshop.pythonanywhere.com', 'timetoshop.herokuapp.com', '127.0.0.1']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
