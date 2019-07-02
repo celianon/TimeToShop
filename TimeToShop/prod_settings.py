@@ -17,9 +17,9 @@ django_heroku.settings(locals())
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/app/static/')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, '/app/static/')
+# ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, '/app/static/')
 
