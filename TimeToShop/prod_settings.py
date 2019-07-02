@@ -6,7 +6,7 @@ SECRET_KEY = 'k@w1h-n8r*i!67sj)+osn=t0m^b8vqsd5s#kf1f6c2wtt44m(z'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['timetoshop.pythonanywhere.com', 'timetoshop.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['timetoshop.pythonanywhere.com', '127.0.0.1']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -17,7 +17,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 #     os.path.join(BASE_DIR, '/app/static/')
 # ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, '/app/static/')
+STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 
 os.makedirs(STATIC_ROOT, exist_ok=True)
 
