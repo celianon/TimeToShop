@@ -10,6 +10,7 @@ import { fetch_items_in_category, load_up_search } from '../actions/shopActions'
 import ItemsCard from './ItemsCard'
 import Search from './Search' 
 import Filters from './Filters'
+import { Grid } from '@material-ui/core';
 
 export class CategoryPage extends React.Component{
   componentDidMount(){
@@ -40,7 +41,37 @@ export class CategoryPage extends React.Component{
         loader={<div key={1}>Loading...</div>}
         className="wrap"
       >
-        <section className="items-search wrap">
+        <Grid container
+          direction="row-reverse">
+          <Grid item container
+            style={{'paddingTop': '1rem'}}
+            justify="center"
+            xs={12}
+            md={4}
+            lg={4}>
+            <Filters category_name={category_name}/>
+          </Grid>
+          <Grid container item
+            xs={12}
+            md={8}
+            lg={8}
+            direction="column">
+            <Grid container
+              justify="center"
+              alignItems="center">
+              <Search category_name={category_name}/>
+            </Grid>
+            <Grid item container
+              direction="column">
+            {category_page_fetched ? 
+              category.item.length == 0 ? <div className="not-item"><h2>Not Items</h2><img src={d} /></div> :
+                category.item.map(item => <ItemsCard key={item.id} item={item}/>) 
+              : <p>Loading...</p>
+            }
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* <section className="items-search wrap">
           <div className="content">
             <div className="search-result">
               <div className="search">
@@ -52,11 +83,14 @@ export class CategoryPage extends React.Component{
                   : <p>Loading...</p>
                 }
             </div>
-            <div className="sidebar">
+            <Grid item
+              xs={12}
+              md={4}
+              lg={4}>
               <Filters category_name={category_name}/>
-            </div>
+            </Grid>
           </div>
-        </section>
+        </section> */}
       </InfiniteScroll>
     )
   }

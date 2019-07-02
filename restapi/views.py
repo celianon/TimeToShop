@@ -1,17 +1,22 @@
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
+from django.http import Http404
+
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from django_filters import rest_framework as filters
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
-
 from django_filters import Filter
 
 from .serializers import CategorySerializer, ItemSerializer, ReviewSerializer
 from .models import Category, Item, Review
 
+# 'Access-Control-Allow-Origin'
 
 # API
 class CategoryCreateList(generics.ListCreateAPIView):
@@ -19,10 +24,44 @@ class CategoryCreateList(generics.ListCreateAPIView):
   serializer_class = CategorySerializer
   pagination_class = None
 
-class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-  queryset = Category.objects.all()
-  serializer_class = CategorySerializer
-  lookup_field = 'title'
+
+class CategoryDetail(APIView):
+  CORS_HEADERS = {'Access-Control-Allow-Origin' : '*'}
+
+  def get_serializer_context(self):
+    return {
+      'request': self.request,
+      'format': self.format_kwarg,
+      'view': self
+    }
+
+  def get_serializer(self, *args, **kwargs):
+    kwargs['context'] = self.get_serializer_context()
+    return CategorySerializer(*args, **kwargs)
+
+  def get_object(self, title):
+    try:
+      return Category.objects.get(title=title)
+    except:
+      raise Http404
+
+  def get(self, request, title, format=None):
+    category = self.get_object(title)
+    serializer = self.get_serializer(category)
+    return Response(serializer.data, headers=self.CORS_HEADERS)
+
+  def put(self, request, title, format=None):
+    category = self.get_object(title)
+    serializer = self.get_serializer(category, data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers=self.CORS_HEADERS)
+
+  def delete(self, request, title, format=None):
+    category = self.get_object(title)
+    category.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT, headers=self.CORS_HEADERS)
 
 
 class ListFilter(Filter):
@@ -36,12 +75,12 @@ class ListFilter(Filter):
       return qs.filter(query)
     return qs
 
+
 class ItemFilter(filters.FilterSet):
   min_prise = filters.NumberFilter(field_name="prise", lookup_expr='gte')
   max_prise = filters.NumberFilter(field_name="prise", lookup_expr='lte')
   types = ListFilter(field_name='types',)
 
-  # TODO many values like types=1,2,3
   class Meta:
     model = Item
     fields = ['types', 'min_prise', 'max_prise']
@@ -53,6 +92,7 @@ class ItemCreateList(generics.ListCreateAPIView):
   search_fields = ('title', 'description', 'props', 'prise')
   filterset_class = ItemFilter
 
+
   def get_queryset(self):
     queryset = Item.objects.all()
     category = self.request.query_params.get('category', None)
@@ -62,12 +102,33 @@ class ItemCreateList(generics.ListCreateAPIView):
     return queryset
 
 
-class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
-  serializer_class = ItemSerializer
-  queryset = Item.objects.all()
+class ItemDetail(APIView):
+  CORS_HEADERS = {'Access-Control-Allow-Origin' : '*'}
 
-  lookup_field = 'slug'
+  def get_object(self, slug):
+    try:
+      return Item.objects.get(slug=slug)
+    except:
+      raise Http404
 
+  def get(self, request, slug, format=None):
+    item = self.get_object(slug)
+    serializer = ItemSerializer(item)
+    print(self.CORS_HEADERS)
+    return Response(serializer.data, headers=self.CORS_HEADERS)
+
+  def put(self, request, slug, format=None):
+    item = self.get_object(slug)
+    serializer = ItemSerializer(item, data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers=self.CORS_HEADERS)
+
+  def delete(self, request, slug, format=None):
+    item = self.get_object(slug)
+    item.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT, headers=self.CORS_HEADERS)
 
 class ReviewCreateList(generics.ListCreateAPIView):
   queryset = Review.objects.all()

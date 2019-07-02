@@ -1,0 +1,1 @@
+web: gunicorn TimeToShop.wsgi --log-file -

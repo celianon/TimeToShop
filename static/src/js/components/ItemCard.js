@@ -164,12 +164,6 @@ export default class ItemCard extends React.Component {
                       multiline
                       id="body"
                     />
-                  {/* <form action="">
-                    <input ref="nickname" placeholder="Nickname" className="review-input" type="text"/>
-                    <input ref="stars" placeholder="How many stars you give ? (1-5)" className="review-input" type="number"/>
-                    <textarea ref="body" rows={8} cols={37} maxLength={225} className="review-textarea" placeholder="Review..."></textarea>
-                    <button onClick={(e) => add_review(e)} className="btn add-review-button" type="submit">Add</button>
-                  </form> */}
                 </DialogContent>
                 <DialogActions>
                   <Button variant="contained"
@@ -204,7 +198,7 @@ export default class ItemCard extends React.Component {
                       </Grid>
                     </Grid>
                 </Card>)
-                : <p>123</p>
+                : <p>This item hasn`t any reviews. Add it!</p>
               }
             </Grid>
           </Grid>

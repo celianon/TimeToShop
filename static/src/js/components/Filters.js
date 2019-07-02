@@ -45,7 +45,7 @@ export class Filters extends React.Component{
 
     reset ? this.reset() : null
     return (
-      <form ref="sidebar_form" action="">
+      <form ref="sidebar_form" action="" className="form-filter">
         {category_page_fetched ?
             category.filters.split(',').map(filter =>
               <div className="filters" key={filter}>

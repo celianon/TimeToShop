@@ -2,7 +2,7 @@ from rest_framework import serializers, pagination
 from rest_framework.settings import api_settings
 
 from .models import Review, Item, Category
-
+from .pagination import CustomPagination
 
 class CategoryNameSer(serializers.ModelSerializer):
   class Meta:
@@ -39,10 +39,11 @@ class CategorySerializer(serializers.ModelSerializer):
     fields = ('title', 'img', 'image_url', 'item', 'filters', 'properties')
 
   def paginated_item(self, obj):
+    print(f'self: \n{self},\n context: {self.context},')
     item = Item.objects.filter(category=obj)
     paginator = pagination.PageNumberPagination()
-    page = paginator.paginate_queryset(item, self.context['request'])
-    serializer = ItemSerializer(page, many=True, context={'request': self.context['request']})
+    page = paginator.paginate_queryset(item, self.context.get("request"))
+    serializer = ItemSerializer(page, many=True, context={'request': self.context.get("request")})
     return serializer.data
 
   def get_image_url(self, obj):
