@@ -1,5 +1,8 @@
 venv/
 
+*.gz
+*.*.*
+
 static/admin/
 static/rest_framework/
 
@@ -99,3 +102,4 @@ local_settings.py
 
 .env
 db.sqlite3
+test.sqlite3

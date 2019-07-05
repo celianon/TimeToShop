@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 class CustomPagination(pagination.PageNumberPagination):
     page_size = 3
-    
+
     def get_paginated_response(self, data):
         response = Response({
             'next': self.get_next_link(),
@@ -12,6 +12,4 @@ class CustomPagination(pagination.PageNumberPagination):
             'count': self.page.paginator.count,
             'results': data
         })
-        response['Access-Control-Allow-Origin'] = '*'
-        print(123)
         return response
