@@ -34,14 +34,13 @@ class CategoryCreateList(mixins.ListModelMixin,
       return self.get_paginated_response(serializer.data)
 
     serializer = self.get_serializer(queryset, many=True)
-    return Response(serializer.data, headers={'Access-Control-Allow-Origin' : '*'})
+    return Response(serializer.data)
 
   def post(self, request, *args, **kwargs):
     return self.create(request, *args, **kwargs)
 
 
 class CategoryDetail(APIView):
-  CORS_HEADERS = {'Access-Control-Allow-Origin' : '*'}
 
   def get_serializer_context(self):
     return {
@@ -63,7 +62,7 @@ class CategoryDetail(APIView):
   def get(self, request, title, format=None):
     category = self.get_object(title)
     serializer = self.get_serializer(category)
-    return Response(serializer.data, headers=self.CORS_HEADERS)
+    return Response(serializer.data)
 
   def put(self, request, title, format=None):
     category = self.get_object(title)
@@ -71,12 +70,12 @@ class CategoryDetail(APIView):
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers=self.CORS_HEADERS)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
   def delete(self, request, title, format=None):
     category = self.get_object(title)
     category.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT, headers=self.CORS_HEADERS)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ListFilter(Filter):
@@ -118,7 +117,6 @@ class ItemCreateList(generics.ListCreateAPIView):
 
 
 class ItemDetail(APIView):
-  CORS_HEADERS = {'Access-Control-Allow-Origin' : '*'}
 
   def get_object(self, slug):
     try:
@@ -129,8 +127,7 @@ class ItemDetail(APIView):
   def get(self, request, slug, format=None):
     item = self.get_object(slug)
     serializer = ItemSerializer(item)
-    print(self.CORS_HEADERS)
-    return Response(serializer.data, headers=self.CORS_HEADERS)
+    return Response(serializer.data)
 
   def put(self, request, slug, format=None):
     item = self.get_object(slug)
@@ -138,12 +135,12 @@ class ItemDetail(APIView):
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers=self.CORS_HEADERS)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
   def delete(self, request, slug, format=None):
     item = self.get_object(slug)
     item.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT, headers=self.CORS_HEADERS)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ReviewCreateList(generics.ListCreateAPIView):
   queryset = Review.objects.all()

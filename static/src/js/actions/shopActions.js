@@ -4,7 +4,7 @@ export const fetch_list_category = () => dispatch => {
   dispatch({
     type: 'FETCH_LIST_CATEGORY_START'
   })
-  fetch('http://127.0.0.1:8000/api/category/')
+  fetch('https://timetoshop.pythonanywhere.com/api/category/')
     .then(response => {
       return response.json()
     })
@@ -27,13 +27,13 @@ export const fetch_items_in_category = (title, next=null) => dispatch => {
   if (next){
     URL = next
   } else {
-    URL = `http://127.0.0.1:8000/api/category/${title}?page=1`
+    URL = `https://timetoshop.pythonanywhere.com/api/category/${title}?page=1`
   }
   fetch(URL)
     .then(response => {
       return response.json()
     })
-    .then(category => 
+    .then(category =>
       dispatch({
         type: 'FETCH_ITEMS_WITH_CATEGORY',
         payload: category,
@@ -53,9 +53,9 @@ export const fetch_items_without_category = (next = null) => dispatch => {
   // get next url is exist
   let URL
   if (next){
-    URL = next 
+    URL = next
   } else {
-    URL = `http://127.0.0.1:8000/api/item/` 
+    URL = `https://timetoshop.pythonanywhere.com/api/item/`
   }
   fetch(URL)
     .then(response => {
@@ -75,7 +75,7 @@ export const fetch_item = (slug) => dispatch => {
   dispatch({
     type: 'FETCH_ITEM_START'
   })
-  fetch(`http://127.0.0.1:8000/api/item/${slug}`)
+  fetch(`https://timetoshop.pythonanywhere.com/api/item/${slug}`)
     .then(response => {
       return response.json()
     })
@@ -105,18 +105,18 @@ export const search_items = (title = null, query = '', types = {}, min = '', max
     category = ''
   }
   // get types values
-  let list_types = [] 
+  let list_types = []
   for (let i in types){
     if (types[i]){
       list_types.push(i)
     }
   }
-  // go to next url if it exist 
+  // go to next url if it exist
   let URL
   if (next) {
     URL = next
   } else {
-   URL = `http://127.0.0.1:8000/api/item/?${category}search=${query}&types=${list_types.join()}&min_prise=${min}&max_prise=${max}`
+   URL = `https://timetoshop.pythonanywhere.com/api/item/?${category}search=${query}&types=${list_types.join()}&min_prise=${min}&max_prise=${max}`
   }
   // request
   fetch(URL)
@@ -125,7 +125,7 @@ export const search_items = (title = null, query = '', types = {}, min = '', max
     })
     .then(qs_items =>{
       // search with or without category
-      title == null ? 
+      title == null ?
         dispatch({
         type: 'SEARCH_ITEMS_WITHOUT_CATOGORY',
         payload: qs_items
@@ -194,7 +194,7 @@ export const home_toggle_isMount = value => dispatch => {
 
 export const add_review = (id, nickname, stars, body) => dispatch => {
   const csrftoken = Cookies.get('csrftoken')
-  fetch('http://127.0.0.1:8000/api/review/', {
+  fetch('https://timetoshop.pythonanywhere.com/api/review/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

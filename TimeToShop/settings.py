@@ -14,7 +14,7 @@ INSTALLED_APPS = [
 
     'restapi',
     'django_filters',
-    'rest_framework'
+    'rest_framework',
 ]
 
 
@@ -24,23 +24,26 @@ MEDIA_URL = '/img/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'restapi.pagination.CustomPagination',
     'PAGE_SIZE': 3
 }
+
+
 
 ROOT_URLCONF = 'TimeToShop.urls'
 
