@@ -1,10 +1,12 @@
 import Cookies from 'js-cookie'
+
+import { api_url } from './local_api_urls'
 // list of category
 export const fetch_list_category = () => dispatch => {
   dispatch({
     type: 'FETCH_LIST_CATEGORY_START'
   })
-  fetch('https://timetoshop.pythonanywhere.com/api/category/')
+  fetch(`${api_url}category/`)
     .then(response => {
       return response.json()
     })
@@ -27,7 +29,7 @@ export const fetch_items_in_category = (title, next=null) => dispatch => {
   if (next){
     URL = next
   } else {
-    URL = `https://timetoshop.pythonanywhere.com/api/category/${title}?page=1`
+    URL = `${api_url}category/${title}?page=1`
   }
   fetch(URL)
     .then(response => {
@@ -55,7 +57,7 @@ export const fetch_items_without_category = (next = null) => dispatch => {
   if (next){
     URL = next
   } else {
-    URL = `https://timetoshop.pythonanywhere.com/api/item/`
+    URL = `${api_url}item/`
   }
   fetch(URL)
     .then(response => {
@@ -75,7 +77,7 @@ export const fetch_item = (slug) => dispatch => {
   dispatch({
     type: 'FETCH_ITEM_START'
   })
-  fetch(`https://timetoshop.pythonanywhere.com/api/item/${slug}`)
+  fetch(`${api_url}item/${slug}`)
     .then(response => {
       return response.json()
     })
@@ -116,7 +118,7 @@ export const search_items = (title = null, query = '', types = {}, min = '', max
   if (next) {
     URL = next
   } else {
-   URL = `https://timetoshop.pythonanywhere.com/api/item/?${category}search=${query}&types=${list_types.join()}&min_prise=${min}&max_prise=${max}`
+   URL = `${api_url}item/?${category}search=${query}&types=${list_types.join()}&min_prise=${min}&max_prise=${max}`
   }
   // request
   fetch(URL)
@@ -194,7 +196,7 @@ export const home_toggle_isMount = value => dispatch => {
 
 export const add_review = (id, nickname, stars, body) => dispatch => {
   const csrftoken = Cookies.get('csrftoken')
-  fetch('https://timetoshop.pythonanywhere.com/api/review/', {
+  fetch(`${api_url}review/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
