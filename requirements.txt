@@ -1,5 +1,5 @@
 dj-database-url==0.5.0
-Django==2.2.4
+Django==2.2.8
 django-contrib-postgres==0.0.1
 django-cors-headers==3.0.2
 django-filter==2.1.0
